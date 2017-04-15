@@ -48,51 +48,6 @@ app.use('/users', users);
 app.use('/events', events);
 app.use('/joinEvent', individualEvents);
 app.use('/upload', upload);
-//app.use('/push', push);
-
-/*app.get('/fakeUser', function(req, res) {
-
-  // create a sample user
-  var nick = new User({ 
-    email: 'long.trinh@sjsu.edu', 
-    password: 'Wierdo12!',
-    profile_picture: 'dog.png',
-    first_name: 'Kevin',
-    last_name: 'Trinh',
-    conversations: [],
-    items: [],
-    admin: true 
-  });
-
-  console.log("attempting to save user");
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
-
-    console.log('User saved successfully');
-    res.json({ success: true });
-  });
-
-
-
-});
-
-app.get('/fakeItems', function(req, res){
-  var item = new Item({
-    userId: '5821bcf612ffd866d5023532',
-    title: 'Calculus Book, Fundamental Stewart',
-    description: 'This book is used for MATH30, 31, and I think 32.. Pretty cheap if you need to take all those three classes',
-    pictures: ['gay.png', 'dog.png'],
-    price: 24.99,
-    expiration: 1478730191
-  });
-
-  item.save(function(err){
-    if(err) throw err;
-
-    res.json({success: true});
-  })
-});*/
 
 app.use(function(req, res, next) {
   if (toobusy()) {
