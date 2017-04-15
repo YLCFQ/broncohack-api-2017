@@ -169,7 +169,7 @@ router.post('/new', function(req, res, next){
       type: req.body.type,
       loc: {
         type: "Point",  
-        coordinates: [req.body.loc.x, req.body.loc.y],
+        coordinates: [req.body.x, req.body.y],
      }
 });
   		  newEvent.save(function(err){
