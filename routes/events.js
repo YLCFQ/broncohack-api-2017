@@ -166,6 +166,7 @@ router.post('/new', function(req, res, next){
       current_enrollment: req.body.current_enrollment,
       organ_id: req.body.organ_id,
       pictures: req.body.pictures,
+      type: req.body.type,
       loc: {
         type: "Point",  
         coordinates: [req.body.loc.x, req.body.loc.y],
@@ -173,7 +174,7 @@ router.post('/new', function(req, res, next){
 });
   		  newEvent.save(function(err){
         if(err) throw err;
-          Event.collection.createIndex({loc:"2dsphere"});
+          //Event.collection.createIndex({loc:"2dsphere"});
           res.status(200);
           res.json(newEvent);
     });

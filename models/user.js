@@ -13,4 +13,4 @@ module.exports = db.model('User', new require('mongoose').Schema({
 		coordinates: [Number],
 	}//user last known location
 	
-}));
+}).index({ loc: "2dsphere" }));

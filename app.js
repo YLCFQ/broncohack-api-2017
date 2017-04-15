@@ -10,7 +10,7 @@ var auth = require('./routes/auth');
 var users = require('./routes/users');
 var register = require('./routes/register')
 var events = require('./routes/events');
-//var conversations = require('./routes/conversations');
+var individualEvents = require('./routes/individualEvents');
 var upload = require('./routes/upload');
 //var push = require('./routes/push');
 
@@ -46,7 +46,7 @@ app.use('/auth', auth);
 app.use('/register', register);
 app.use('/users', users);
 app.use('/events', events);
-//app.use('/conversations', conversations);
+app.use('/joinEvent', individualEvents);
 app.use('/upload', upload);
 //app.use('/push', push);
 

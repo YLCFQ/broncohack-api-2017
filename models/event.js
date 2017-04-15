@@ -10,6 +10,7 @@ module.exports =  db.model('Event', new require('mongoose').Schema({
 	current_enrollment: Number,
 	organ_id: Number,
 	pictures: [String],
+	type: Number,
 	loc: {
 		type: {type: String},
 		coordinates: [Number],
