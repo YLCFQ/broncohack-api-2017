@@ -5,7 +5,7 @@ module.exports = db.model('User', new require('mongoose').Schema({
 	display_name: String, // user name
 	city: String, // user city
 	state: String, // user state
-	phone_number: Number, // user phone number
+	phone_number: String, // user phone number
 	points: Number, //user points earned
 	picture: String, // image url
 	loc: {

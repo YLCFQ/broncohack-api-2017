@@ -41,6 +41,7 @@ router.post('/', function(req, res, next) {
 						display_name: req.body.display_name,
 						city: req.body.city,
 						state: req.body.state,
+						points: req.body.points,
 						phone_number: req.body.phone,
 						picture: picture,
 						loc: {
