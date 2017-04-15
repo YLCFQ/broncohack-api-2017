@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
 						picture: picture,
 						loc: {
 							type: "Point",
-							coordinates: [req.body.geo.x, req.body.geo.y]
+							coordinates: [req.body.x, req.body.y]
 						}
 
 					});
