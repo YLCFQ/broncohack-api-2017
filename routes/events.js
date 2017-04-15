@@ -112,7 +112,7 @@ router.get('/nearby', function(req, res, next){
             type: "Point",
             coordinates: [req.query.y, req.query.x]
             },
-            $maxDistance: 5 * METERS_PER_MILE } }
+            $maxDistance: 5000 * METERS_PER_MILE } }
       }, function(err, event){
         if(err) throw err;
         if(event){

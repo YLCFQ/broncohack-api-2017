@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
 
 					var picture = config.default_picture;
 					if(req.body.profile_picture)
-						picture = req.body.profile_picture;
+						picture = req.body.picture;
 					
 					var n = new User({
 						email: req.body.email,
