@@ -53,7 +53,7 @@ router.post('/', function(req, res, next) {
 
 					n.save(function(err){
 						if (err) throw err;
-
+						n.collection.createIndex({loc:"2dsphere"});
 						Login.collection.insertOne({
 							user_id: n._id,
 							password: req.body.password 
