@@ -6,16 +6,35 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
+var auth = require('./routes/auth');
 var users = require('./routes/users');
+var register = require('./routes/register')
+var events = require('./routes/events');
+//var conversations = require('./routes/conversations');
+var upload = require('./routes/upload');
+//var push = require('./routes/push');
+
+var toobusy = require('toobusy-js');
+
+var dbConfig = require('./db.js');
+
+var config = require('./config.js');
+
+
+var session = require('express-session');
+
 
 var app = express();
+app.set('api_secret', config.secret);
+app.set('token_expire', config.token_expire);
+app.use(session({secret: config.secret}));
 
-// view engine setup
+var User = require('./models/user.js');
+//var Item = require('./models/item.js');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,24 +42,91 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/auth', auth);
+app.use('/register', register);
 app.use('/users', users);
+app.use('/events', events);
+//app.use('/conversations', conversations);
+app.use('/upload', upload);
+//app.use('/push', push);
 
-// catch 404 and forward to error handler
+/*app.get('/fakeUser', function(req, res) {
+
+  // create a sample user
+  var nick = new User({ 
+    email: 'long.trinh@sjsu.edu', 
+    password: 'Wierdo12!',
+    profile_picture: 'dog.png',
+    first_name: 'Kevin',
+    last_name: 'Trinh',
+    conversations: [],
+    items: [],
+    admin: true 
+  });
+
+  console.log("attempting to save user");
+  // save the sample user
+  nick.save(function(err) {
+    if (err) throw err;
+
+    console.log('User saved successfully');
+    res.json({ success: true });
+  });
+
+
+
+});
+
+app.get('/fakeItems', function(req, res){
+  var item = new Item({
+    userId: '5821bcf612ffd866d5023532',
+    title: 'Calculus Book, Fundamental Stewart',
+    description: 'This book is used for MATH30, 31, and I think 32.. Pretty cheap if you need to take all those three classes',
+    pictures: ['gay.png', 'dog.png'],
+    price: 24.99,
+    expiration: 1478730191
+  });
+
+  item.save(function(err){
+    if(err) throw err;
+
+    res.json({success: true});
+  })
+});*/
+
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  if (toobusy()) {
+    res.send(503, "I'm busy right now, sorry.");
+  } else {
+    next();
+  }
+}); 
+
+
+app.use(function(req, res, next) {
+  var err = new Error('Not Found API');
   err.status = 404;
   next(err);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
+
 
 module.exports = app;
